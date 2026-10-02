@@ -4,46 +4,42 @@
 
 using namespace std;
 
-// Struct untuk menyimpan data aplikasi Water Intake
 struct WaterIntakeApp {
-    // Data Pengguna
-    double weight = 0.0;
-    bool isTropical = false; // Weather: true = Tropis, false = Subtropis
-    int activityChoice = 0;   // 1: Ringan, 2: Sedang, 3: Berat
 
-    // Data Perhitungan
+    double weight = 0.0;
+    bool isTropical = false; 
+    int activityChoice = 0;   
+
+    
     double dailyTargetMl = 0.0;
     double currentProgressMl = 0.0;
 
-    // Data Streak & Pengingat
+    
     int streakCount = 0;
-    int reminderIntervalHours = 2; // Pengingat minum setiap 2 jam
+    int reminderIntervalHours = 2;
 };
 
-// Fungsi 1: Water Intake Calculator
 void calculateWaterTarget(WaterIntakeApp &app) {
-    // Rumus dasar: Berat Badan (kg) * 35 ml
+    
     double baseWater = app.weight * 35.0;
     double totalWater = baseWater;
 
-    // Faktor Weather (Boolean)
     if (app.isTropical) {
-        totalWater += 500.0; // Iklim Tropis (+500 ml)
+        totalWater += 500.0; 
     } else {
-        totalWater += 200.0; // Iklim Subtropis (+200 ml)
+        totalWater += 200.0; 
     }
 
     // Faktor Aktivitas
     if (app.activityChoice == 2) {
-        totalWater += 350.0; // Aktivitas Sedang
+        totalWater += 350.0; 
     } else if (app.activityChoice == 3) {
-        totalWater += 700.0; // Aktivitas Berat
+        totalWater += 700.0; 
     }
 
     app.dailyTargetMl = totalWater;
 }
 
-// Fungsi 2: Water Intake Reminder & Drink Logger
 void logWaterDrink(WaterIntakeApp &app) {
     double drinkAmount = 0.0;
     cout << "\n------------------------------------------" << endl;
@@ -60,12 +56,12 @@ void logWaterDrink(WaterIntakeApp &app) {
     app.currentProgressMl += drinkAmount;
     cout << "[+] Berhasil mencatat " << drinkAmount << " ml air." << endl;
 
-    // Cek Progres & Cek Pemenuhan Target
+    
     if (app.currentProgressMl >= app.dailyTargetMl) {
         cout << "\n==========================================" << endl;
         cout << " [!] SELAMAT! Target harian Anda tercapai!" << endl;
         cout << "==========================================" << endl;
-        app.streakCount++; // Menambah streak jika target tercapai
+        app.streakCount++; 
         cout << " Streak harian Anda bertambah menjadi: " << app.streakCount << " Hari 🔥" << endl;
     } else {
         double sisa = app.dailyTargetMl - app.currentProgressMl;
@@ -77,7 +73,6 @@ void logWaterDrink(WaterIntakeApp &app) {
     }
 }
 
-// Fungsi 3: Water Streak & Status Dashboard
 void displayDashboard(const WaterIntakeApp &app) {
     cout << "\n==========================================" << endl;
     cout << "         WATER INTAKE DASHBOARD           " << endl;
@@ -99,19 +94,16 @@ int main() {
     cout << "      SETUP WATER INTAKE CALCULATOR       " << endl;
     cout << "==========================================" << endl;
 
-    // Input Berat Badan
     cout << "Masukkan Berat Badan (kg): ";
     cin >> app.weight;
 
-    // Input Weather (Boolean)
     cout << "\nPilih Iklim Tempat Tinggal:" << endl;
     cout << "1. Tropis" << endl;
     cout << "2. Subtropis" << endl;
     cout << "Pilihan (1/2): ";
     cin >> climateChoice;
-    app.isTropical = (climateChoice == 1); // Jika 1 = true, selain itu false
-
-    // Input Aktivitas Harian
+    app.isTropical = (climateChoice == 1); 
+    
     cout << "\nPilih Tingkat Aktivitas Harian:" << endl;
     cout << "1. Ringan" << endl;
     cout << "2. Sedang" << endl;
@@ -119,7 +111,6 @@ int main() {
     cout << "Pilihan (1-3): ";
     cin >> app.activityChoice;
 
-    // Hitung Target Awal
     calculateWaterTarget(app);
 
     int menuChoice = 0;
